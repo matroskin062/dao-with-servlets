@@ -28,15 +28,15 @@ public class UserMySql implements UserDao {
         }
     }
 
-//    public void closeConnection() {
-//        if(connection != null){
-//            try{
-//                connection.close();
-//            }catch (SQLException ex){
-//                ex.printStackTrace();
-//            }
-//        }
-//    }
+    public void closeConnection() {
+        if(connection != null){
+            try{
+                connection.close();
+            }catch (SQLException ex){
+                ex.printStackTrace();
+            }
+        }
+    }
 
     public void insert(User entity) {
         if(connection != null){
