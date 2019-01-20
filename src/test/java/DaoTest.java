@@ -7,6 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,20 +18,19 @@ public class DaoTest {
     private User u = new User(1,"Name", 1);
 
     @BeforeEach
-    void setUp(){
-        dao.truncate();
+    void setUp() throws Exception{
+        dao.transaction();
         dao.insert(u);
     }
 
     @AfterEach
-    void refresh(){
-        dao.truncate();
+    void after() throws Exception{
+//        dao.rollback();
     }
 
     @Test
     void getAll(){
-        int exp = 1;
-        assertEquals(1,dao.getAll().size());
+        assertTrue(dao.getAll().size() > 0);
     }
 
     @Test
@@ -53,7 +55,7 @@ public class DaoTest {
     void delete(){
         dao.delete(u);
         assertNull(dao.getById(u.getId()));
-        Assert.assertEquals(0, dao.getAll().size());
+//        Assert.assertEquals(0, dao.getAll().size());
     }
 
     @Test
@@ -66,10 +68,10 @@ public class DaoTest {
         Assert.assertEquals(newName, updateUser.getName());
     }
 
-    @Test
-    void truncate(){
-        assertTrue(dao.getAll().size() > 0);
-        dao.truncate();
-        assertEquals(0, dao.getAll().size());
-    }
+//    @Test
+//    void truncate(){
+//        assertTrue(dao.getAll().size() > 0);
+//        dao.truncate();
+//        assertEquals(0, dao.getAll().size());
+//    }
 }

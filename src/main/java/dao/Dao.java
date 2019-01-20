@@ -9,4 +9,6 @@ public interface Dao<T> {
     void delete(T entity);
     void update(T entity);
     void truncate();
+    void transaction();
+    void rollback();
 }

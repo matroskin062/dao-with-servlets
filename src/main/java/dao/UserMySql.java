@@ -13,9 +13,9 @@ public class UserMySql implements UserDao {
     private final String DELETE = "delete from test_table where id=?";
     private final String UPDATE = "update test_table set name=?, age=? where id=?";
 
-    private final String url = "jdbc:mysql://localhost:3306/lab1DB";
-    private final String user = "root";
-    private final String pass = "dopeclub";
+    public final String url = "jdbc:mysql://localhost:3306/lab1DB";
+    public final String user = "root";
+    public final String pass = "dopeclub";
 
     private Connection connection;
     private PreparedStatement statement;
@@ -41,6 +41,7 @@ public class UserMySql implements UserDao {
     public void insert(User entity) {
         if(connection != null){
             try{
+
                 statement = connection.prepareStatement(INSERT);
                 statement.setInt(1, entity.getId());
                 statement.setString(1, entity.getName());
@@ -131,6 +132,24 @@ public class UserMySql implements UserDao {
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("TRUNCATE TABLE test_table");
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public void transaction(){
+        try{
+            Statement statement = connection.createStatement();
+            statement.executeQuery("START TRANSACTION ");
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public void rollback(){
+        try{
+            Statement statement = connection.createStatement();
+            statement.executeQuery("rollback ");
         }catch (SQLException ex){
             ex.printStackTrace();
         }
